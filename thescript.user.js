@@ -1,44 +1,50 @@
 // ==UserScript==
 // @name         Youtube to mobile
 // @namespace    maxhyt.youtubeToMobile
-// @version      1.0
+// @version      1.2
 // @description  try to take over the world!
 // @author       Maxhyt
-// @match        https://www.youtube.com/watch?v=*
+// @match        https://www.youtube.com/*
 // @grant        GM_xmlhttpRequest
+// @grant        GM_notification
 // @connect      api.pushbullet.com
-// @require      https://code.jquery.com/jquery-3.5.1.min.js
 // @run-at       document-idle
 // ==/UserScript==
-
-    
-var $ = jQuery;
 
 (function() {
     'use strict';
     
-    setTimeout(() => {
-        let controlsBox = $("div.ytp-right-controls");
-        if (controlsBox.length > 0)
-        {
-            $(controlsBox[0]).prepend('<button id="sendToMobileButton" class="ytp-button" style="vertical-align: top; padding: 7px"><svg width="100%" height="100%" viewBox="0 0 16 16" fill="currentColor">' +
-                                      '<path fill-rule="evenodd" d="M11 1H5a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>' +
-                                      '<path fill-rule="evenodd" d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>' +
-                                      '</svg></button>');
+    setInterval(function addButton()
+    {
+        //new Promise(resolve => {
+            if (document.body.querySelector("#sendToMobileButton") === null && /watch\?v=/.test(window.location.href))
+            {
+                let controlsBox = document.body.querySelector("div.ytp-right-controls");
+                if (controlsBox !== null)
+                {
+                    let buttonDiv = document.createElement("div");
+                    buttonDiv.innerHTML = '<button id="sendToMobileButton" class="ytp-button" title="Send to mobile" style="vertical-align: top; padding: 7px">' +
+                        '<svg width="100%" height="100%" viewBox="0 0 16 16" class="bi bi-phone-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V2zm6 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>' +
+                        '</button>';
+                    controlsBox.insertBefore(buttonDiv.firstChild, controlsBox.childNodes[0]);
+
+                    document.body.querySelector("#sendToMobileButton").onclick = function() {
+                        getLink();
+                    };
+                }
+            }
             
-            $("#sendToMobileButton").on("click", () => {
-                getLink();
-            });
-        }
-    }, 100);
+            //resolve();
+        //});
+    }, 5000);
 
     function getLink()
     {
-        let progressbar = $("div.ytp-progress-bar");
+        let progressbar = document.body.querySelector("div.ytp-progress-bar");
 
-        if (progressbar.length > 0)
+        if (progressbar !== null)
         {
-            let time = $(progressbar[0]).attr("aria-valuenow");
+            let time = progressbar.getAttribute("aria-valuenow");
 
             push(window.location.href + "&t=" + time);
         }
@@ -46,7 +52,7 @@ var $ = jQuery;
 
     function push(link)
     {
-        console.info("Sent push request");
+        console.log("Sent push request");
         
         GM_xmlhttpRequest({
             url: 'https://api.pushbullet.com/v2/pushes',
@@ -55,11 +61,11 @@ var $ = jQuery;
                 type: "link",
                 title: "S3cr3tKey From Maxhyt",
                 url: link,
-                device_iden: "<id>"
+                device_iden: "ujyic81KxoqsjwWJj7SKVE"
             }),
             headers: {
                 "Content-Type": "application/json",
-                "Access-Token": "<token>"
+                "Access-Token": "o.TmRSUmnhtct3CJYoayKBxYFFuZEmqbqm"
             },
             responseType: 'json',
             onload: function (data) {
@@ -67,10 +73,17 @@ var $ = jQuery;
                 if (data.response.active)
                 {
                     console.info("Pushed success!");
+                    GM_notification("Pushed to mobile success!");
+                }
+                else
+                {
+                    console.error("Push failed: " + data.response.error_code);
+                    GM_notification("Pushed to mobile Failed!");
                 }
             },
             onerror: function() {
-                console.log("PUSH FAILED: ");
+                console.error("Push failed: XMLHttp error");
+                GM_notification("Push failed: XMLHttp error");
             }
         });
     }
