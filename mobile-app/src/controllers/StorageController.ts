@@ -1,4 +1,5 @@
 import Storage from "../models/Storage";
+import { VerifyUUIDv4 } from "../Utils";
 
 /**
  * Get a list of Web IDs stored in storage
@@ -18,9 +19,15 @@ export async function GetIDs(): Promise<string[]> {
  * Save a web ID to storage
  * @param id the Web ID to store
  */
-export async function SaveID(id: string): Promise<void> {
-    let ids = await GetIDs();
+export async function SaveID(id: string): Promise<boolean> {
+    if (VerifyUUIDv4(id)) {
+        let ids = await GetIDs();
+        
+        ids = [...new Set([...ids, id])];
+        await Storage.Instance.SetItem('ids', JSON.stringify(ids));
+        
+        return true;
+    }
     
-    ids = [...new Set([...ids, id])];
-    Storage.Instance.SetItem('ids', JSON.stringify(ids));
+    return false;
 }
