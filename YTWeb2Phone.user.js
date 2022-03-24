@@ -25,7 +25,7 @@
         ShowQR();
     }
     
-    GM_registerMenuCommand("View QR ID", ShowQR);
+    GM_registerMenuCommand("View QR ID", () => ShowQR());
     
     setInterval(() =>
     {
@@ -90,10 +90,20 @@
         qrContainer.style.width = "100vw";
         qrContainer.style.height = "100vh";
         qrContainer.style.display = "flex";
+        qrContainer.style.flexDirection = "column";
         qrContainer.style.justifyContent = "center";
         qrContainer.style.alignItems = "center";
         
-        qrContainer.addEventListener('click', () => qrContainer.remove());
+        qrContainer.addEventListener('click', (event) => {
+            if (event.target !== document.body.querySelector('#ytweb2phone_qr_info'))
+                qrContainer.remove();
+        });
+        
+        qrContainer.innerHTML = `<div id="ytweb2phone_qr_info" style="font-size: 18px; color: white; background: black; line-height: 1.5; padding: .5em; border-radius: .5em; margin-bottom: 1em;">
+        Click anywhere outside this box to close<br/>
+        To view again, right click on the page -> Tampermonkey -> YT Web To Phone -> View QR ID<br/>
+        Your ID: ${GetDeviceID()}
+        </div><br/>`;
         
         const qrcode = new QRCode(qrContainer, {
             text: GetDeviceID(),
