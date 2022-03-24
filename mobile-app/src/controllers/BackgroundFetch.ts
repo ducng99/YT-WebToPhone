@@ -9,6 +9,8 @@ const BACKGROUND_FETCH_TASK = 'background-fetch-video-url';
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     const ids = await GetIDs();
     
+    console.dir(ids);
+    
     for (const id of ids) {
         const url = await FetchVideoFromID(id);
         Linking.openURL(url);
@@ -20,7 +22,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 export async function StartTask() {
     if (!await IsTaskRunning()) {
         await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-            minimumInterval: 5,
+            minimumInterval: 1,
             stopOnTerminate: false,
             startOnBoot: true,
         });

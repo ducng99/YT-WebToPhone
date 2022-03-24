@@ -10,8 +10,9 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
 
     useEffect(() => {
         (async () => {
-            setCanBackgroundRun(await BackgroundFetch.CanRunBackground());
-            if (canBackgroundRun) {
+            const _canBackgroundRun = await BackgroundFetch.CanRunBackground();
+            setCanBackgroundRun(_canBackgroundRun);
+            if (_canBackgroundRun) {
                 setTaskRunning(await BackgroundFetch.IsTaskRunning());
             }
         })();

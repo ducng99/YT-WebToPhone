@@ -22,14 +22,15 @@ export default class Storage {
     }
     
     private readonly PASSPHRASE_KEY = 'storagePassphrase';
+    private passphrase: string|null = null;
     
     private constructor() {}
     
     async Init() {
         if (!this.IsInitialized) {
-            const passphrase = await SecureStore.getItemAsync(this.PASSPHRASE_KEY);
+            this.passphrase = await SecureStore.getItemAsync(this.PASSPHRASE_KEY);
             
-            if (!passphrase) {
+            if (!this.passphrase) {
                 await SecureStore.setItemAsync('storagePassphrase', GenerateRandomString());
             }
             
@@ -41,11 +42,10 @@ export default class Storage {
         await this.Init();
         
         try {
-            const passphrase = await SecureStore.getItemAsync(this.PASSPHRASE_KEY);
             const encrypted_value = await AsyncStorage.getItem(key);
             
-            if (passphrase && encrypted_value) {
-                return CryptoES.AES.decrypt(encrypted_value, passphrase).toString(CryptoES.enc.Utf8);
+            if (this.passphrase && encrypted_value) {
+                return CryptoES.AES.decrypt(encrypted_value, this.passphrase).toString(CryptoES.enc.Utf8);
             }
         }
         catch (ex) {
@@ -57,11 +57,9 @@ export default class Storage {
     async SetItem(key: string, value: any) {
         await this.Init();
         
-        try {
-            const passphrase = await SecureStore.getItemAsync('storagePassphrase');
-            
-            if (passphrase) {
-                const encrypted_value = CryptoES.AES.encrypt(value, passphrase).toString();
+        try {            
+            if (this.passphrase) {
+                const encrypted_value = CryptoES.AES.encrypt(value, this.passphrase).toString();
                 await AsyncStorage.setItem(key, encrypted_value);
             }
         }

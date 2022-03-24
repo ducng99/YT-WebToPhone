@@ -8,7 +8,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -19,13 +19,16 @@
     "ios": {
       "bundleIdentifier": "dev.web2phone.YTWeb2Phone",
       "supportsTablet": true,
-      "infoPlist": { "NSCameraUsageDescription": "Camera is used for QR code scanner" }
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera is used for QR code scanner",
+        "NSMicrophoneUsageDescription": "Microphone is used for QR code scanner"
+      }
     },
     "android": {
       "package": "dev.ducng.YTWeb2Phone",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#000000"
       },
       "permissions": ["CAMERA"]
     },

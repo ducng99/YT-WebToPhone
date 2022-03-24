@@ -31,3 +31,10 @@ export async function SaveID(id: string): Promise<boolean> {
     
     return false;
 }
+
+export async function RemoveID(id: string): Promise<void> {
+    let ids = await GetIDs();
+    
+    ids = ids.filter(i => i !== id);
+    await Storage.Instance.SetItem('ids', JSON.stringify(ids));
+}
