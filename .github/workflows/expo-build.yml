@@ -44,4 +44,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android-app
-          path: '**/.apk'
+          path: |
+            ./build-*.apk
+            ../build-*.apk            
