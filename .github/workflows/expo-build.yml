@@ -39,3 +39,9 @@ jobs:
 
       - name: 🚀 Build android app
         run: eas build --non-interactive --local --platform android
+        
+      - name: ⬆ Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-app
+          path: '**/.apk'
