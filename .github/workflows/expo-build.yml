@@ -45,5 +45,5 @@ jobs:
         with:
           name: android-app
           path: |
-            ./build-*.apk
-            ../build-*.apk            
+            build-*.apk
+            ~/**/build-*.apk            
