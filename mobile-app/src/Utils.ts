@@ -12,3 +12,7 @@ export function GenerateRandomString(length = 64) {
 export function VerifyUUIDv4(id: string) {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id);
 }
+
+export function Sleep(time: number) {
+    return new Promise(resolve => setTimeout(() => resolve(null), time));
+}

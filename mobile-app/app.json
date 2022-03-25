@@ -21,7 +21,8 @@
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Camera is used for QR code scanner",
-        "NSMicrophoneUsageDescription": "Microphone is used for QR code scanner"
+        "NSMicrophoneUsageDescription": "Microphone is used for QR code scanner",
+        "UIBackgroundModes": ["location", "fetch"]
       }
     },
     "android": {
