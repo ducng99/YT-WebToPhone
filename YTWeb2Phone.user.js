@@ -65,16 +65,20 @@
     async function SendRequest(url)
     {
         try {
-            await fetch("https://gateway.aws.ducng.dev/ytweb2phone/", {
+            const res = await fetch("https://gateway.aws.ducng.dev/ytweb2phone/", {
                 method: "PUT",
                 body: JSON.stringify({ id: GetDeviceID(), url })
             });
             
-            GM_notification({ text: "Logged a request for your phone!", title: "YT Web to Phone" });
+            if (res.status === 201) {
+                GM_notification({ text: "Logged a request for your phone!", title: "YT Web to Phone" });
+            } else {
+                GM_notification({ text: "Failed send a request to your phone", title: "YT Web to Phone" });
+            }
         }
         catch (ex) {
             console.error(ex);
-            GM_notification({ text: "Failed send a request to your phone", title: "YT Web to Phone" });
+            GM_notification({ text: "Failed to connect to server", title: "YT Web to Phone" });
         }
     }
     
