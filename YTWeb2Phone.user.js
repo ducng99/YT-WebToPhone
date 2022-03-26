@@ -1,12 +1,11 @@
 // ==UserScript==
 // @name         YT Web to Phone
 // @namespace    maxhyt.YTWeb2Phone
-// @version      2.0.0
+// @version      2.1.0
 // @description  Send Youtube video to mobile
 // @author       Maxhyt
 // @match        https://www.youtube.com/*
 // @icon         https://icons.duckduckgo.com/ip2/youtube.com.ico
-// @require      https://cdnjs.cloudflare.com/ajax/libs/uuid/8.1.0/uuidv4.min.js
 // @require      https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@master/qrcode.min.js
 // @grant        GM_notification
 // @grant        GM_getValue
@@ -14,15 +13,20 @@
 // @grant        GM_registerMenuCommand
 // ==/UserScript==
 
-(function() {
+(async function() {
     'use strict';
     
     const NAME_DEVICE_ID = "YT-WebToPhone-DeviceID";
     const GetDeviceID = () => GM_getValue(NAME_DEVICE_ID, "");
     
     if (!GetDeviceID()) {
-        GM_setValue(NAME_DEVICE_ID, uuidv4());
-        ShowQR();
+        let res = await fetch("https://gateway.aws.ducng.dev/ytweb2phone/web");
+        
+        if (res.status === 201) {
+            res = await res.json();
+            GM_setValue(NAME_DEVICE_ID, res.id);
+            ShowQR();
+        }
     }
     
     GM_registerMenuCommand("View QR ID", () => ShowQR());
@@ -65,12 +69,12 @@
     async function SendRequest(url)
     {
         try {
-            const res = await fetch("https://gateway.aws.ducng.dev/ytweb2phone/", {
-                method: "PUT",
-                body: JSON.stringify({ id: GetDeviceID(), url })
+            const res = await fetch("https://gateway.aws.ducng.dev/ytweb2phone/web/push", {
+                method: "POST",
+                body: JSON.stringify({ webDeviceID: GetDeviceID(), url })
             });
             
-            if (res.status === 201) {
+            if (res.status === 200) {
                 GM_notification({ text: "Logged a request for your phone!", title: "YT Web to Phone" });
             } else {
                 GM_notification({ text: "Failed send a request to your phone", title: "YT Web to Phone" });

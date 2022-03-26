@@ -2,7 +2,10 @@ import { NavigationProp } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Text, Divider } from "react-native-paper";
-import * as BackgroundFetch from "../controllers/BackgroundFetch";
+import * as BackgroundTask from "../controllers/BackgroundTask";
+import * as ForegroundTask from '../controllers/ForegroundTask';
+import { registerForPushNotificationsAsync } from "../controllers/PushNotification";
+import { GetPushToken, SavePushToken } from "../controllers/StorageController";
 
 export default function Home({ navigation }: { navigation: NavigationProp<any> }) {
     const [canBackgroundRun, setCanBackgroundRun] = useState(false);
@@ -10,23 +13,38 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
 
     useEffect(() => {
         (async () => {
-            const _canBackgroundRun = await BackgroundFetch.CanRunBackground();
+            let token = await GetPushToken();
+            if (!token) {
+                token = await registerForPushNotificationsAsync() ?? "";
+                SavePushToken(token);
+            }
+            
+            const _canBackgroundRun = await BackgroundTask.CanRunBackground();
             setCanBackgroundRun(_canBackgroundRun);
             if (_canBackgroundRun) {
-                setTaskRunning(await BackgroundFetch.IsTaskRunning());
+                const isRunning = await BackgroundTask.IsTaskRunning();
+                setTaskRunning(isRunning);
+                if (isRunning) {
+                    ForegroundTask.StartTask();
+                }
             }
         })();
     }, []);
 
     const toggleTask = async () => {
-        if (await BackgroundFetch.IsTaskRunning()) {
-            await BackgroundFetch.StopTask();
+        if (await BackgroundTask.IsTaskRunning()) {
+            await BackgroundTask.StopTask();
+            ForegroundTask.StopTask();
         }
         else {
-            await BackgroundFetch.StartTask();
+            await BackgroundTask.StartTask();
+            ForegroundTask.StartTask();
         }
+        
+        console.log("Background task running: " + await BackgroundTask.IsTaskRunning());
+        console.log("Foreground task running: " + ForegroundTask.IsTaskRunning());
 
-        setTaskRunning(await BackgroundFetch.IsTaskRunning());
+        setTaskRunning(await BackgroundTask.IsTaskRunning());
     };
 
     return (
@@ -43,7 +61,7 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
                         <Text style={{ fontSize: 42 }}>{taskRunning ? "running..." : "not running!"}</Text>
                         <Button mode="contained" color={taskRunning ? "red" : "cyan"} style={{ marginTop: 20 }} onPress={() => toggleTask()}>{taskRunning ? "Kill me now" : "Turn me on?"}</Button>
 
-                        <Divider style={{ marginVertical: 16}}/>
+                        <Divider style={{ marginVertical: 16 }} />
 
                         <View style={{ flexDirection: 'row' }}>
                             <Button mode="contained" onPress={() => navigation.navigate('Devices')} style={{ marginRight: 10 }}>View devices</Button>

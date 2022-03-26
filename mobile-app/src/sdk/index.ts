@@ -1,16 +1,22 @@
 import { VerifyUUIDv4 } from "../Utils";
 
-export async function FetchVideoFromID(id: string): Promise<string> {
-    let url = '';
-    
-    if (VerifyUUIDv4(id)) {
-        let res = await fetch('https://gateway.aws.ducng.dev/ytweb2phone?id=' + id);
-        res = await res.json();
-        
-        if (res.url) {
-            url = res.url;
+export async function RegisterPhoneToWebDevice(webDeviceID: string, token: string) {
+    if (VerifyUUIDv4(webDeviceID)) {
+        try {
+            let res = await fetch("https://gateway.aws.ducng.dev/ytweb2phone/app", {
+                method: "POST",
+                body: JSON.stringify({
+                    webDeviceID,
+                    appPushToken: token
+                })
+            });
+
+            return res.status === 201;
         }
+        catch (ex) {
+            console.error(ex);
+        }
+
+        return false;
     }
-    
-    return url;
 }

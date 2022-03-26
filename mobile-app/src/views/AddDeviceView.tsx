@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { Button, Text, TextInput, Title, HelperText } from "react-native-paper";
 import Toast from "react-native-root-toast";
-import { SaveID } from "../controllers/StorageController";
+import { GetPushToken, SaveWebDeviceID } from "../controllers/StorageController";
+import { RegisterPhoneToWebDevice } from "../sdk";
 import { VerifyUUIDv4 } from "../Utils";
 
 export default function AddDeviceView({ navigation, route }: { navigation: NavigationProp<any>, route: RouteProp<any, any> }) {
     const [deviceIDInput, setDeviceIDInput] = useState("");
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         if (route.params?.deviceID) {
@@ -16,22 +18,29 @@ export default function AddDeviceView({ navigation, route }: { navigation: Navig
     }, [route.params?.updated]);
 
     const onSaveID = async () => {
+        setLoading(true);
+        
         try {
-            const success = await SaveID(deviceIDInput);
+            const token = await GetPushToken();
 
-            if (success) {
-                setDeviceIDInput("");
-                Toast.show('Device added!', {
-                    backgroundColor: 'cyan',
-                    textColor: "black",
-                });
-            }
-            else {
-                Toast.show('Device ID is invalid', {
-                    backgroundColor: 'cyan',
-                    textColor: "black",
-                    position: 0
-                });
+            if (token) {
+                await RegisterPhoneToWebDevice(deviceIDInput, token);
+                const success = await SaveWebDeviceID(deviceIDInput);
+
+                if (success) {
+                    setDeviceIDInput("");
+                    Toast.show('Device added!', {
+                        backgroundColor: 'cyan',
+                        textColor: "black",
+                    });
+                }
+                else {
+                    Toast.show('Device ID is invalid', {
+                        backgroundColor: 'cyan',
+                        textColor: "black",
+                        position: 0
+                    });
+                }
             }
         }
         catch (ex) {
@@ -39,6 +48,9 @@ export default function AddDeviceView({ navigation, route }: { navigation: Navig
                 backgroundColor: 'cyan',
                 textColor: "black",
             });
+        }
+        finally {
+            setLoading(false);
         }
     }
 
@@ -61,7 +73,7 @@ export default function AddDeviceView({ navigation, route }: { navigation: Navig
             <HelperText type="error" visible={hasDeviceIDError()}>
                 Invalid device ID!
             </HelperText>
-            <Button mode="contained" style={{ marginTop: 16 }} onPress={() => onSaveID()}>Add device</Button>
+            <Button mode="contained" loading={isLoading} style={{ marginTop: 16 }} onPress={() => onSaveID()}>Add device</Button>
         </View>
     )
 }

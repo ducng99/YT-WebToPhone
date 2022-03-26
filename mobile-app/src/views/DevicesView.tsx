@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, SafeAreaView, ScrollView, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 import { Button, Divider, Text } from "react-native-paper";
-import { GetIDs, RemoveID } from "../controllers/StorageController";
+import { GetWebDeviceIDs, RemoveWebDeviceID } from "../controllers/StorageController";
 
 export default function DevicesView() {
     const [devices, setDevices] = useState<string[]>([]);
@@ -9,20 +9,20 @@ export default function DevicesView() {
 
     useEffect(() => {
         (async () => {
-            const devices = await GetIDs();
+            const devices = await GetWebDeviceIDs();
             setDevices(devices);
             setLoadingDevices(false);
         })();
     }, []);
 
     const deleteDevice = async (id: string) => {
-        await RemoveID(id);
-        setDevices(await GetIDs());
+        await RemoveWebDeviceID(id);
+        setDevices(await GetWebDeviceIDs());
     }
     
     const refreshList = async () => {
         setLoadingDevices(true);
-        setDevices(await GetIDs());
+        setDevices(await GetWebDeviceIDs());
         setLoadingDevices(false);
     }
 

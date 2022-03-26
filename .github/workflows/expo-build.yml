@@ -7,14 +7,14 @@ on:
     branches: [main]
 
   workflow_dispatch:
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: 'mobile-app'
+        working-directory: "mobile-app"
 
     steps:
       - name: 🏗 Setup repo
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 16.x
           cache: yarn
-          cache-dependency-path: './mobile-app/yarn.lock'
+          cache-dependency-path: "./mobile-app/yarn.lock"
 
       - name: 🏗 Setup Expo and EAS
         uses: expo/expo-github-action@v7
@@ -39,11 +39,11 @@ jobs:
 
       - name: 🚀 Build android app
         run: eas build --non-interactive --local --platform android
-        
+
       - name: ⬆ Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-app
           path: |
-            build-*.apk
-            ~/**/build-*.apk            
+            mobile-app/build-*.apk
+            ~/**/build-*.apk
