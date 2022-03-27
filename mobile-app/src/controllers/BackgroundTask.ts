@@ -1,14 +1,14 @@
 import * as TaskManager from 'expo-task-manager';
 import * as Notifications from 'expo-notifications';
-import { Linking } from 'react-native';
+import { Linking, ToastAndroid } from 'react-native';
 import { Subscription } from 'expo-modules-core';
 
 const BACKGROUND_NOTI_HANDLER = 'background-notification-handler';
-let listener: Subscription|null = null;
+let listener: Subscription | null = null;
 
 TaskManager.defineTask(BACKGROUND_NOTI_HANDLER, ({ data, error, executionInfo }) => {
-    console.log("Background running");
-    if (error) throw error;
+    ToastAndroid.show("Received a new video!", ToastAndroid.SHORT);
+    if (error) ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
 
     const _data = (data as any);
 
@@ -34,7 +34,7 @@ export function StopTask() {
     if (listener) {
         Notifications.removeNotificationSubscription(listener);
     }
-    
+
     return Notifications.unregisterTaskAsync(BACKGROUND_NOTI_HANDLER);
 }
 

@@ -2,7 +2,7 @@ import * as Notifications from 'expo-notifications';
 import { Subscription } from 'expo-modules-core';
 import { Linking } from 'react-native';
 
-let listener: Subscription|null = null;
+let listener: Subscription | null = null;
 
 export function StartTask() {
     if (!listener) {

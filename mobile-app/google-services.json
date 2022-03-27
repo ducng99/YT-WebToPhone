@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "438692254505",
+    "project_id": "yt-web-to-phone",
+    "storage_bucket": "yt-web-to-phone.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438692254505:android:0c613455b42de8ebf69d38",
+        "android_client_info": {
+          "package_name": "dev.ducng.YTWeb2Phone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438692254505-saa7dgme875tgbpndaobp7dpl7mrnc7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dev.ducng.YTWeb2Phone",
+            "certificate_hash": "cbae7524720de80d261d5826868b6f6988bfa390"
+          }
+        },
+        {
+          "client_id": "438692254505-j1utbjvlo5flu94qa374h280tclicgg4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXLWJGqYkUsWm24pJIWexPmVhfj4sqeXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438692254505-j1utbjvlo5flu94qa374h280tclicgg4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

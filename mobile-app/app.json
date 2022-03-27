@@ -22,7 +22,7 @@
       "infoPlist": {
         "NSCameraUsageDescription": "Camera is used for QR code scanner",
         "NSMicrophoneUsageDescription": "Microphone is used for QR code scanner",
-        "UIBackgroundModes": ["location", "fetch"]
+        "UIBackgroundModes": ["remote-notification"]
       }
     },
     "android": {
@@ -31,10 +31,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "permissions": ["CAMERA"]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
+      "permissions": ["CAMERA"],
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

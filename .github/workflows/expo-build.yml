@@ -44,6 +44,18 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: android-app
-          path: |
+          path: ~/**/build-*.apk
+          
+      - name: ⬆ Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: android-app2
+          path: mobile-app/build-*.apk
+          
+      - name: 📱 Create a release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
             mobile-app/build-*.apk
             ~/**/build-*.apk

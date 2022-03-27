@@ -19,7 +19,7 @@ export default function DevicesView() {
         await RemoveWebDeviceID(id);
         setDevices(await GetWebDeviceIDs());
     }
-    
+
     const refreshList = async () => {
         setLoadingDevices(true);
         setDevices(await GetWebDeviceIDs());
@@ -29,7 +29,7 @@ export default function DevicesView() {
     const renderItem = ({ item }: { item: string }) => {
         return (
             <React.Fragment key={item}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 16 }}>
                     <Text style={{ fontSize: 18, flexGrow: 1 }}>{item}</Text>
                     <Button icon="delete" compact={true} labelStyle={{ fontSize: 28, color: 'red' }} onPress={() => deleteDevice(item)}></Button>
                 </View>
@@ -39,7 +39,7 @@ export default function DevicesView() {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, marginHorizontal: 16, justifyContent: "center" }}>
+        <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
             {
                 devices.length > 0 ?
                     <FlatList
