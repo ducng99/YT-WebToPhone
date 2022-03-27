@@ -30,7 +30,8 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
                 }
             }
             catch (ex) {
-                setToken('Internal error: Failed to get token');
+                console.error(ex);
+                setToken("Internal error: Failed to get token\n" + ex);
             }
 
             if (!await BackgroundTask.CanRunBackground()) {
