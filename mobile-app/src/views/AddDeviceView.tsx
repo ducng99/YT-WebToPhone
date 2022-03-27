@@ -80,7 +80,7 @@ export default function AddDeviceView({ navigation, route }: { navigation: Navig
             <HelperText type="error" visible={hasDeviceIDError()}>
                 Invalid device ID!
             </HelperText>
-            <Button mode="contained" loading={isLoading} style={{ marginTop: 16 }} onPress={() => { setLoading(true); onSaveID(); }}>Add device</Button>
+            <Button mode="contained" disabled={isLoading} loading={isLoading} style={{ marginTop: 16 }} onPress={() => { setLoading(true); onSaveID(); }}>Add device</Button>
         </View>
     )
 }
