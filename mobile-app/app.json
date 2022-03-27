@@ -2,7 +2,7 @@
   "expo": {
     "name": "YT Web2Phone",
     "slug": "yt-web2phone",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,11 +24,11 @@
         "NSMicrophoneUsageDescription": "Microphone is used for QR code scanner",
         "UIBackgroundModes": ["remote-notification"]
       },
-      "buildNumber": "202203271"
+      "buildNumber": "202203273"
     },
     "android": {
       "package": "dev.ducng.YTWeb2Phone",
-      "versionCode": 202203271,
+      "versionCode": 202203273,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"

@@ -8,12 +8,24 @@ let listener: Subscription | null = null;
 
 TaskManager.defineTask(BACKGROUND_NOTI_HANDLER, ({ data, error, executionInfo }) => {
     ToastAndroid.show("Received a new video!", ToastAndroid.SHORT);
-    if (error) ToastAndroid.show(JSON.stringify(error), ToastAndroid.LONG);
+    if (error) {
+        console.error(JSON.stringify(error));
+        return;
+    }
 
+    console.log("Notification Data: " + JSON.stringify(data));
+    
     const _data = (data as any);
 
-    if (_data.remoteMessage?.data?.url) {
-        Linking.openURL(_data.remoteMessage.data.url);
+    if (_data.notification?.data?.body) {
+        try {
+            const body = JSON.parse(_data.notification.data.body);
+            if (body.url)
+                Linking.openURL(body.url);
+        }
+        catch (ex) {
+            console.error("Empty notification body/data");
+        }
     }
     //TODO: iOS stuffs
 });

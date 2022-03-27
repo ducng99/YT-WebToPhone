@@ -29,9 +29,9 @@ export default function DevicesView() {
     const renderItem = ({ item }: { item: string }) => {
         return (
             <React.Fragment key={item}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 16 }}>
-                    <Text style={{ fontSize: 18, flexGrow: 1 }}>{item}</Text>
-                    <Button icon="delete" compact={true} labelStyle={{ fontSize: 28, color: 'red' }} onPress={() => deleteDevice(item)}></Button>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16 }}>
+                    <Text style={{ fontSize: 17 }}>{item}</Text>
+                    <Button icon="delete" compact={true} labelStyle={{ fontSize: 24, color: 'red' }} onPress={() => deleteDevice(item)}></Button>
                 </View>
                 <Divider />
             </React.Fragment>
