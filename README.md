@@ -1,19 +1,30 @@
 # YT-WebToPhone
+[![Expo Build](https://github.com/ducng99/YT-WebToPhone/actions/workflows/expo-build.yml/badge.svg)](https://github.com/ducng99/YT-WebToPhone/actions/workflows/expo-build.yml)
 
-Have you ever been watching a Youtube video on your PC or laptop, then want to continue watching on your phone right away because you are going to bed or bathroom or kitchen? Then this script is for you!
+## Are you the one?
+Have you ever been watching a YouTube video on your PC or laptop, then want to continue watching on your phone right away because you are going to bed or bathroom or kitchen? Then this script is for you!
 
-This script adds a button on Youtube player, clicking on the button will send the video straight to your phone with the time you are currently watching.
-But of course life ain’t that simple to install. We need 2 apps and a plugin to achieve this.
+This script adds a button on YouTube player, clicking on the button will send the video straight to your phone with the time you are currently watching.
 
-Pushbullet – install on your phone to receive push notification<br/>
-Automate – Handle the notification and open Youtube app<br/>
-Tampermonkey – a script to send the notification
+## How how how?
+### Requirements
+1. First, install [Tampermonkey](https://tampermonkey.net)
+2. Install [this script](https://github.com/ducng99/YT-WebToPhone/raw/main/YTWeb2Phone.user.js)
+3. On your phone, download and install the app: [Latest release](https://github.com/ducng99/YT-WebToPhone/releases/latest)
 
-How to:
-- Install Pushbullet on your phone. Sign in as requested.
-- Install Automate
-- Install Tampermonkey
-- Install the script. After installing, refresh this page, a Configure section should appear on top.
-- Download this file on your phone. Open Automate app, click the 3-dots button on top-right corner, click Import. Choose the file you just downloaded. A flow named “YT Autopop” should be there, click on it and start. You might need to install/enable privileges as needed.
-- Open Pushbullet website on your browser (on PC/Laptop), login and navigate to Settings page (on the left panel). Click on “Create Access Token” button to generate a token. Copy and paste in the configure section above. Device ID is only necessarry if you use Pushbullet on multiple devices, we can skip that for now.
-- Click Save button in Configure section above.
+### Set things up
+- Open YouTube website, you will see a QR code. (if you missed it, right click -> Tampermonkey -> YT Web to Phone -> View QR ID)
+- Open the app on your phone
+- Wait until you see "Your token:" is displaying something like `ExponentPushToken[xxxx]`
+- Click `Add new device` button -> `Scan QR code`
+- Point your phone camera at the QR code on the screen
+- Click `Add device`
+- Go back to Home screen
+- Click `Turn me on`
+
+And you are set!
+
+There will be a button in bottom-right of the video player, click it and the video goes to your phone.
+
+# Info
+The mobile app, script provided in this repo is not associated with YouTube™.
