@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "438692254505",
-    "project_id": "yt-web-to-phone",
-    "storage_bucket": "yt-web-to-phone.appspot.com"
+    "project_number": "487368108193",
+    "project_id": "yt-web-to-phone-70278",
+    "storage_bucket": "yt-web-to-phone-70278.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:438692254505:android:0c613455b42de8ebf69d38",
+        "mobilesdk_app_id": "1:487368108193:android:c407b88436720f3be1a8e0",
         "android_client_info": {
           "package_name": "dev.ducng.YTWeb2Phone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "438692254505-saa7dgme875tgbpndaobp7dpl7mrnc7d.apps.googleusercontent.com",
+          "client_id": "487368108193-67klue025vf0msbd17lmh3cvi38qi4c0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "dev.ducng.YTWeb2Phone",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "438692254505-j1utbjvlo5flu94qa374h280tclicgg4.apps.googleusercontent.com",
+          "client_id": "487368108193-iul0at52tqmqmvvs38bl2togpi0o51rq.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAXLWJGqYkUsWm24pJIWexPmVhfj4sqeXQ"
+          "current_key": "AIzaSyDOmpLctNjnRgCnc-9ez3ZK9X-CGa69w44"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "438692254505-j1utbjvlo5flu94qa374h280tclicgg4.apps.googleusercontent.com",
+              "client_id": "487368108193-iul0at52tqmqmvvs38bl2togpi0o51rq.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
