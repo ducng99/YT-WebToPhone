@@ -1,6 +1,6 @@
 import * as Notifications from 'expo-notifications';
 import { isDevice } from 'expo-device';
-import { Platform } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 /**
  * Register a token on Expo server and return the token
@@ -16,7 +16,7 @@ export async function registerForPushNotificationsAsync() {
             finalStatus = status;
         }
         if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
+            Alert.alert('Error', 'Failed to get push token for push notification!');
             return;
         }
         token = (await Notifications.getExpoPushTokenAsync()).data;

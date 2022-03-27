@@ -13,19 +13,24 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
 
     useEffect(() => {
         (async () => {
-            let _token = await GetPushToken();
-            if (!_token) {
-                _token = await registerForPushNotificationsAsync() ?? "";
-                if (_token) {
-                    await SavePushToken(_token);
-                    setToken(_token);
+            try {
+                let _token = await GetPushToken();
+                if (!_token) {
+                    _token = await registerForPushNotificationsAsync() ?? "";
+                    if (_token) {
+                        await SavePushToken(_token);
+                        setToken(_token);
+                    }
+                    else {
+                        setToken('Failed to get token');
+                    }
                 }
                 else {
-                    setToken('Failed to get token');
+                    setToken(_token);
                 }
             }
-            else {
-                setToken(_token);
+            catch (ex) {
+                setToken('Internal error: Failed to get token');
             }
 
             if (!await BackgroundTask.CanRunBackground()) {
