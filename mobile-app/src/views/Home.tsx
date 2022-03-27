@@ -55,10 +55,10 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
 
         setTaskRunning(await BackgroundTask.IsTaskRunning());
     };
-    
-    const resetToken = async () => {
-        setToken("Loading...");
-        
+
+    const refetchToken = async () => {
+        setToken("Refetching...");
+
         let _token = await registerForPushNotificationsAsync() ?? "";
         if (_token) {
             await SavePushToken(_token);
@@ -87,7 +87,7 @@ export default function Home({ navigation }: { navigation: NavigationProp<any> }
                 <Button mode="contained" onPress={() => navigation.navigate('Add device')} style={{ marginLeft: 10 }}>Add new device</Button>
             </View>
             <Text>Your token: {token}</Text>
-            <Button mode="contained" onPress={resetToken} color='red' style={{ marginTop: 16}}>Reset token</Button>
+            <Button mode="contained" onPress={refetchToken} color='red' style={{ marginTop: 16 }}>Refetch token</Button>
         </View>
     );
 }
